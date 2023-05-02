@@ -1,8 +1,7 @@
 <template>
   <v-text-field
       :rules="[rules.required, rules.length, rules.valid]"
-      :value="email"
-      @input="email = $event.target.value"
+      v-model="email"
       clearable="clearable"
       label="Email"
       variant="solo"

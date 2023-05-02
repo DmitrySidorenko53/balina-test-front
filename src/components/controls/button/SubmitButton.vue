@@ -1,7 +1,7 @@
 <template>
   <v-btn
-      type="submit"
-      block class="mt-2 mb-4 text-none bg-teal-lighten-2"
+      type="submit" block
+      class="mt-2 mb-4 text-none bg-teal-lighten-2 font-weight-bold"
       elevation="4"
   >
     Submit
