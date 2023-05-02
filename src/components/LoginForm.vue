@@ -55,9 +55,7 @@
     </v-row>
     <v-row class="px-5 mt-5" justify="center">
       <v-col cols="12" md="6" class="pt-0">
-        <v-btn class="text-none text-teal-lighten-2 bg-grey-lighten-5" block>
-          Forgot Password?
-        </v-btn>
+        <ForgotPasswordButton/>
       </v-col>
     </v-row>
   </v-card>
@@ -69,11 +67,12 @@ import PasswordInput from "@/components/controls/input/PasswordInput";
 import StayInSystemCheckBox from "@/components/controls/checkbox/StayInSystemCheckBox";
 import SubmitButton from "@/components/controls/button/SubmitButton";
 import ResetButton from "@/components/controls/button/ResetButton";
+import ForgotPasswordButton from "@/components/controls/button/ForgotPasswordButton";
 
 
 export default {
   name: "LoginForm",
-  components: {ResetButton, SubmitButton, StayInSystemCheckBox, PasswordInput, EmailInput},
+  components: {ForgotPasswordButton, ResetButton, SubmitButton, StayInSystemCheckBox, PasswordInput, EmailInput},
   data: () => ({
     email: '',
     password: '',
