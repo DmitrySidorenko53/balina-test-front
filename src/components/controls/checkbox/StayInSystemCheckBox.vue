@@ -1,6 +1,7 @@
 <template>
   <v-checkbox
-      v-model="checkbox"
+      v-model="stayInSystem"
+      @change="$emit('update:stayInSystem', $event.target.checked)"
       label="Remain in system?"
       required
   ></v-checkbox>

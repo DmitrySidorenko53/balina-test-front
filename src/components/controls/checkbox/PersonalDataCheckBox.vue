@@ -1,6 +1,7 @@
 <template>
   <v-checkbox
-      v-model="checkbox"
+      v-model="personalDataAgreement"
+      @change="$emit('update:personalDataAgreement', $event.target.checked)"
       :rules="[rules.validate]"
       label="Do you agree with our Privacy Policy?"
       required
@@ -12,7 +13,6 @@
 export default {
   name: "PersonalDataCheckBox",
   data: () => ({
-    checkbox: false,
     rules: {
       validate: v => !!v || 'You must agree to continue!'
     }

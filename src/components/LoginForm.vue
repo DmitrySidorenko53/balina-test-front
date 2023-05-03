@@ -6,33 +6,15 @@
     <v-card-subtitle>
       Sign in to your account
     </v-card-subtitle>
-    <v-form>
+    <v-form @submit.prevent="login()">
       <v-card-text class="pb-0">
-        <v-text-field
-            :rules="[rulesEmail.required, rulesEmail.length, rulesEmail.valid]"
-            type="email"
-            v-model="email"
-            clearable="clearable"
-            label="Email"
-            variant="solo"
-            prepend-inner-icon="mdi-email-outline"
-        ></v-text-field>
-        <v-text-field
-            :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rulesPassword.required, rulesPassword.length]"
-            :type="show ? 'text' : 'password'"
-            v-model="password"
-            label="Password"
-            variant="solo"
-            class="input-group--focused mt-3"
-            prepend-inner-icon="mdi-lock-outline"
-            @click:append-inner="show = !show"
-        ></v-text-field>
+        <EmailInput v-model="email"/>
+        <PasswordInput v-model="password"/>
       </v-card-text>
       <v-card-actions class="pt-0">
         <v-row class="px-5 py-2">
           <v-col cols="12" md="6" class="pa-0">
-            <StayInSystemCheckBox/>
+            <StayInSystemCheckBox v-model="stayInSystem"/>
           </v-col>
           <v-col cols="6" md="3" class="pa-0 pe-1">
             <SubmitButton/>
@@ -76,18 +58,13 @@ export default {
   data: () => ({
     email: '',
     password: '',
-    show: false,
-    rulesPassword: {
-      required: v => !!v || 'Required',
-      length: v => v.length >= 6 || 'Password length must not be less than 6 characters'
-    },
-    rulesEmail: {
-      required: v => !!v || 'Required',
-      length: v => (v.length >= 10 && v.length <= 50) ||
-          'Email length must be between 10 and 50 characters',
-      valid: v => /^[^@]+@\w+(\.\w+)+\w$/.test(v) || 'Invalid email format'
-    }
+    stayInSystem: null
   }),
+  methods: {
+    login() {
+
+    }
+  }
 }
 </script>
 

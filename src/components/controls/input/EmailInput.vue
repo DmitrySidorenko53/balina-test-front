@@ -2,6 +2,7 @@
   <v-text-field
       :rules="[rules.required, rules.length, rules.valid]"
       v-model="email"
+      @input="$emit('update:email', $event.target.value)"
       clearable="clearable"
       label="Email"
       variant="solo"
@@ -13,7 +14,6 @@
 export default {
   name: "EmailInput",
   data: () => ({
-    email: '',
     rules: {
       required: v => !!v || 'Required',
       length: v => (v.length >= 10 && v.length <= 50) ||

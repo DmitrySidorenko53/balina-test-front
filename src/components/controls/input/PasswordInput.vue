@@ -5,6 +5,7 @@
       :rules="[rules.required, rules.length]"
       :type="show ? 'text' : 'password'"
       v-model="password"
+      @input="$emit('update:password', $event.target.value)"
       label="Password"
       variant="solo"
       class="input-group--focused mt-3"
@@ -19,7 +20,6 @@ export default {
   data() {
     return {
       show: false,
-      password: '',
       rules: {
         required: v => !!v|| 'Required',
         length: v => v.length >= 6 || 'Password length must not be less than 6 characters'
