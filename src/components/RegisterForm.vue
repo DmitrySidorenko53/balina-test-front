@@ -6,16 +6,16 @@
     <v-card-subtitle>
       Create new account
     </v-card-subtitle>
-    <v-form @submit.prevent="register()">
+    <v-form @submit.prevent="handleRegister()" v-if="!success">
       <v-card-text class="pb-0">
-        <EmailInput v-model="email"/>
-        <PasswordInput v-model="password"/>
-        <ConfirmPassword v-model="confirmPassword" :password="password"/>
+        <EmailInput v-model="registerModel.email"/>
+        <PasswordInput v-model="registerModel.password"/>
+        <ConfirmPassword v-model="registerModel.confirmPassword" :password="registerModel.password"/>
       </v-card-text>
       <v-card-actions class="pt-0">
         <v-row class="px-5 py-2">
           <v-col cols="12" md="6" class="pa-0">
-            <PersonalDataCheckBox v-model="personalDataAgreement"/>
+            <PersonalDataCheckBox v-model="registerModel.personalDataAgreement"/>
           </v-col>
           <v-col cols="6" md="3" class="pa-0 pe-2">
             <SubmitButton/>
@@ -47,25 +47,29 @@ import SubmitButton from "@/components/controls/button/SubmitButton";
 import ResetButton from "@/components/controls/button/ResetButton";
 import ConfirmPassword from "@/components/controls/input/ConfirmPassword";
 import axios from "axios";
+import RegisterModel from "@/models/RegisterModel";
+import AuthService from '../services/auth.service';
 
 export default {
   name: "RegisterForm",
   components: {
     ConfirmPassword,
-    ResetButton, SubmitButton, PersonalDataCheckBox, PasswordInput, EmailInput},
+    ResetButton, SubmitButton, PersonalDataCheckBox, PasswordInput, EmailInput
+  },
   data: () => ({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    personalDataAgreement: null
+    registerModel: new RegisterModel(
+      '','','',null
+    ),
+    success: false
   }),
   methods: {
-    register() {
-      axios.post("http://127.0.0.1:8000/auth/register", {
-        'email': this.email,
-        'password': this.password,
-        'confirmPassword': this.confirmPassword
-      }).then(response => console.log(response));
+    handleRegister() {
+      axios.post("auth/register", {
+        'email': this.registerModel.email,
+        'password': this.registerModel.password,
+        'confirmPassword': this.registerModel.confirmPassword,
+        'personalDataAgreement': this.registerModel.personalDataAgreement
+      });
     }
   }
 }

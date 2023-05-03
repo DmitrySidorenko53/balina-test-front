@@ -4,4 +4,7 @@ module.exports = defineConfig({
     pluginOptions: {
         vuetify: {}
     },
+    devServer: {
+        proxy: 'http://127.0.0.1:8000',
+    }
 })

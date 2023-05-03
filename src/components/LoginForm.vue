@@ -6,7 +6,7 @@
     <v-card-subtitle>
       Sign in to your account
     </v-card-subtitle>
-    <v-form @submit.prevent="login()">
+    <v-form @submit="login()">
       <v-card-text class="pb-0">
         <EmailInput v-model="email"/>
         <PasswordInput v-model="password"/>
