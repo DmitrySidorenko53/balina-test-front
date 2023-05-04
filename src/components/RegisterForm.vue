@@ -6,7 +6,7 @@
     <v-card-subtitle>
       Create new account
     </v-card-subtitle>
-    <v-form @submit.prevent="handleRegister()" v-if="!success">
+    <v-form @submit.prevent="handleRegister()">
       <v-card-text class="pb-0">
         <EmailInput v-model="registerModel.email"/>
         <PasswordInput v-model="registerModel.password"/>
@@ -60,16 +60,33 @@ export default {
     registerModel: new RegisterModel(
       '','','',null
     ),
-    success: false
+    message: ''
   }),
+  computed: {
+    loggedIn() {
+      return this.$store.getters.getLoggedStatus;
+    }
+  },
+  mounted() {
+    if (this.loggedIn) {
+      this.$router.push('/home');
+    }
+  },
   methods: {
     handleRegister() {
-      axios.post("auth/register", {
-        'email': this.registerModel.email,
-        'password': this.registerModel.password,
-        'confirmPassword': this.registerModel.confirmPassword,
-        'personalDataAgreement': this.registerModel.personalDataAgreement
-      });
+      this.message='';
+      this.$store.dispatch('auth/register', this.registerModel).then(
+          data => {
+            this.message = data.message;
+            this.router.push('login')
+          },
+          error => {
+            this.message =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+          }
+      )
     }
   }
 }

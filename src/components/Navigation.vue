@@ -8,7 +8,8 @@
       </v-app-bar-title>
       <template v-slot:append>
         <v-list-item>
-          <v-btn to="login"
+          <v-btn v-if="currentUser"
+                 to="login"
                  icon
           >
             <v-icon icon="mdi-account-arrow-right"></v-icon>
@@ -19,7 +20,8 @@
               Login
             </v-tooltip>
           </v-btn>
-          <v-btn to="register"
+          <v-btn v-if="currentUser"
+                 to="register"
                  class="me-2"
 
                  icon="mdi-account-plus"
@@ -32,6 +34,19 @@
               Register
             </v-tooltip>
           </v-btn>
+          <v-btn v-if="!currentUser"
+                 class="me-2"
+                 icon
+                 @click.prevent="logout"
+          >
+            <v-icon icon="mdi-account-plus"></v-icon>
+            <v-tooltip
+                location="bottom"
+                activator="parent"
+            >
+              Logout
+            </v-tooltip>
+          </v-btn>
         </v-list-item>
       </template>
     </v-app-bar>
@@ -40,7 +55,18 @@
 
 <script>
 export default {
-  name: "Navigation"
+  name: "Navigation",
+  computed: {
+    currentUser() {
+      return this.$store.getters.getCurrentUser;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    }
+  }
 }
 </script>
 

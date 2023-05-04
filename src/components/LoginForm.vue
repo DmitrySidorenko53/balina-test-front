@@ -6,15 +6,15 @@
     <v-card-subtitle>
       Sign in to your account
     </v-card-subtitle>
-    <v-form @submit="login()">
+    <v-form @submit.prevent="handleLogin()">
       <v-card-text class="pb-0">
-        <EmailInput v-model="email"/>
-        <PasswordInput v-model="password"/>
+        <EmailInput v-model="loginModel.email"/>
+        <PasswordInput v-model="loginModel.password"/>
       </v-card-text>
       <v-card-actions class="pt-0">
         <v-row class="px-5 py-2">
           <v-col cols="12" md="6" class="pa-0">
-            <StayInSystemCheckBox v-model="stayInSystem"/>
+            <StayInSystemCheckBox v-model="loginModel.stayInSystem"/>
           </v-col>
           <v-col cols="6" md="3" class="pa-0 pe-1">
             <SubmitButton/>
@@ -50,19 +50,45 @@ import StayInSystemCheckBox from "@/components/controls/checkbox/StayInSystemChe
 import SubmitButton from "@/components/controls/button/SubmitButton";
 import ResetButton from "@/components/controls/button/ResetButton";
 import ForgotPasswordButton from "@/components/controls/button/ForgotPasswordButton";
+import RegisterModel from "@/models/RegisterModel";
+import LoginModel from "@/models/LoginModel";
 
 
 export default {
   name: "LoginForm",
   components: {ForgotPasswordButton, ResetButton, SubmitButton, StayInSystemCheckBox, PasswordInput, EmailInput},
   data: () => ({
-    email: '',
-    password: '',
-    stayInSystem: null
+    loginModel: new LoginModel(
+        '', '', null
+    ),
+    message: ''
   }),
+  computed: {
+    loggedIn() {
+      return this.$store.getters.getLoggedStatus;
+    }
+  },
+  created() {
+    if (this.loggedIn) {
+      this.router.push('/home');
+    }
+  },
   methods: {
-    login() {
-
+    handleLogin() {
+      this.message='';
+      if (this.loginModel.email && this.loginModel.password) {
+        this.$store.dispatch('auth/login', this.loginModel).then(
+            () => {
+              this.$router.push('/home');
+            },
+            error => {
+              this.message =
+                  (error.response && error.response.data) ||
+                  error.message ||
+                  error.toString();
+            }
+        )
+      }
     }
   }
 }
