@@ -8,7 +8,7 @@
       </v-app-bar-title>
       <template v-slot:append>
         <v-list-item>
-          <v-btn v-if="currentUser"
+          <v-btn v-if="!currentUser"
                  to="login"
                  icon
           >
@@ -20,7 +20,7 @@
               Login
             </v-tooltip>
           </v-btn>
-          <v-btn v-if="currentUser"
+          <v-btn v-if="!currentUser"
                  to="register"
                  class="me-2"
 
@@ -34,12 +34,12 @@
               Register
             </v-tooltip>
           </v-btn>
-          <v-btn v-if="!currentUser"
+          <v-btn v-else
                  class="me-2"
                  icon
                  @click.prevent="logout"
           >
-            <v-icon icon="mdi-account-plus"></v-icon>
+            <v-icon icon="mdi-account-off"></v-icon>
             <v-tooltip
                 location="bottom"
                 activator="parent"

@@ -14,11 +14,11 @@ export const auth = {
             return AuthService.login(loginModel).then(
                 loginModel => {
                     commit('loginSuccess', loginModel);
-                    return Promise.resolve(loginModel)
+                    return Promise.resolve(loginModel);
                 },
                 error => {
                     commit('loginError');
-                    return Promise.reject(error)
+                    return Promise.reject(error);
                 }
             );
         },
@@ -61,10 +61,10 @@ export const auth = {
     },
     getters: {
         getCurrentUser(state) {
-            return state.initialState.currentUser;
+            return state.currentUser;
         },
         getLoggedStatus(state) {
-            return state.initialState.status;
+            return state.status;
         }
     }
 }

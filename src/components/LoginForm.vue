@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     handleLogin() {
-      this.message='';
+      this.message = '';
       if (this.loginModel.email && this.loginModel.password) {
         this.$store.dispatch('auth/login', this.loginModel).then(
             () => {
@@ -87,7 +87,10 @@ export default {
                   error.message ||
                   error.toString();
             }
-        )
+        ).catch((err) => {
+          console.log(err)
+          throw err;
+        });
       }
     }
   }

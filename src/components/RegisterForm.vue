@@ -46,9 +46,7 @@ import PersonalDataCheckBox from "@/components/controls/checkbox/PersonalDataChe
 import SubmitButton from "@/components/controls/button/SubmitButton";
 import ResetButton from "@/components/controls/button/ResetButton";
 import ConfirmPassword from "@/components/controls/input/ConfirmPassword";
-import axios from "axios";
 import RegisterModel from "@/models/RegisterModel";
-import AuthService from '../services/auth.service';
 
 export default {
   name: "RegisterForm",
@@ -58,7 +56,7 @@ export default {
   },
   data: () => ({
     registerModel: new RegisterModel(
-      '','','',null
+        '', '', '', null
     ),
     message: ''
   }),
@@ -74,11 +72,11 @@ export default {
   },
   methods: {
     handleRegister() {
-      this.message='';
+      this.message = '';
       this.$store.dispatch('auth/register', this.registerModel).then(
           data => {
             this.message = data.message;
-            this.router.push('login')
+            this.$router.push('/login')
           },
           error => {
             this.message =
@@ -86,7 +84,10 @@ export default {
                 error.message ||
                 error.toString();
           }
-      )
+      ).catch((err) => {
+        console.log(err)
+        throw err;
+      });
     }
   }
 }
